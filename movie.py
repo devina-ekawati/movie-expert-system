@@ -8,7 +8,7 @@ class Movie:
 		self.favoriteActors = {}
 		self.favoriteDirectors = {}
 		self.favoriteGenres = {}
-		self.favoriteMovies = [1,2,3,4,19,27,34]
+		self.favoriteMovies = []
 
 		self.actorIdx = [10, 6, 14]
 		self.directorIdx = 1
@@ -19,6 +19,8 @@ class Movie:
 		self.genreScore = 4
 		self.recommendedMovies = []
 		self.recommendedMoviesName = []
+
+		self.init()
 
 	def init(self):
 		with open("movie_metadata.csv", 'rb') as f:
@@ -101,8 +103,8 @@ class Movie:
 
 		return weight
 
-	def getMovieRecommendationNames(self):
-		self.init()
+	def getMovieRecommendationNames(self, favoriteMovies):
+		self.favoriteMovies = favoriteMovies
 		self.getFavoriteActors()
 		self.getFavoriteDirectors()
 		self.getFavoriteGenres()
@@ -121,9 +123,13 @@ class Movie:
 			self.recommendedMoviesName.append(str(self.movies[idx][11])[:-2])
 		return self.recommendedMoviesName
 
+	def getMovies(self):
+		return self.movies
+
 def main():
 	movie = Movie()
-	# print movie.getMovieRecommendationNames()
+	# print movie.getMovieRecommendationNames([1,2,3,4,19,27,34])
+	# print movie.getMovies()
 
 if __name__ == "__main__":
     main()
