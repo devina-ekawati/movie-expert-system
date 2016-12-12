@@ -16,7 +16,7 @@ def get_result():
 	favoriteMovies = []
 	for val in selected:
 		favoriteMovies.append(int(val))
-	return render_template('index.html', movies=movie.getMovieRecommendationNames(favoriteMovies))
+	return render_template('index.html',moviesList=movie.getMoviesName(), movies=movie.getMovieRecommendationNames(favoriteMovies))
 
 if __name__ == '__main__':
     app.run()
