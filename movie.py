@@ -18,8 +18,6 @@ class Movie:
 		self.actorScore = 3
 		self.directorScore = 2
 		self.genreScore = 4
-		self.recommendedMovies = []
-		self.recommendedMoviesName = []
 
 		self.init()
 
@@ -27,7 +25,11 @@ class Movie:
 		with open("movie_metadata.csv", 'rb') as f:
 			self.movies = list(csv.reader(f, delimiter=','))
 
+		for i in range(len(self.movies)-1):
+			self.moviesName.append(str(self.movies[i+1][11]).strip()[:-2].decode("utf8"))
+
 	def getFavoriteActors(self):
+		self.favoriteActors.clear()
 		actors = self.countActors()
 		numFavoriteMovies = len(self.favoriteMovies)
 		for i in range(numFavoriteMovies):
@@ -60,6 +62,7 @@ class Movie:
 		return actors
 
 	def getFavoriteDirectors(self):
+		self.favoriteDirectors.clear()
 		numFavoriteMovies = len(self.favoriteMovies)
 		for i in range(numFavoriteMovies):
 			movieIdx = self.favoriteMovies[i]
@@ -70,6 +73,7 @@ class Movie:
 				self.favoriteDirectors[director] = 1
 
 	def getFavoriteGenres(self):
+		self.favoriteGenres.clear()
 		numFavoriteMovies = len(self.favoriteMovies)
 		for i in range(numFavoriteMovies):
 			movieIdx = self.favoriteMovies[i]
@@ -113,20 +117,19 @@ class Movie:
 		for i in range(len(self.movies)):
 			movieScores.append(self.countWeight(i))
 		arr = np.array(movieScores)
-		self.recommendedMovies =  arr.argsort()[-20:][::-1]
+		recommendedMovies =  arr.argsort()[-20:][::-1]
 		deletedIdx = []
-		for i in range(len(self.recommendedMovies)):
-			if self.recommendedMovies[i] in self.favoriteMovies:
+		for i in range(len(recommendedMovies)):
+			if recommendedMovies[i] in self.favoriteMovies:
 				deletedIdx.append(i)		
-		self.recommendedMovies = np.delete(self.recommendedMovies,deletedIdx)
-		self.recommendedMovies = self.recommendedMovies[:10]
-		for idx in self.recommendedMovies:
-			self.recommendedMoviesName.append(str(self.movies[idx][11]).strip()[:-2].decode("utf8"))
-		return self.recommendedMoviesName
+		recommendedMovies = np.delete(recommendedMovies,deletedIdx)
+		recommendedMovies = recommendedMovies[:10]
+		recommendedMoviesName = []
+		for idx in recommendedMovies:
+			recommendedMoviesName.append(str(self.movies[idx][11]).strip()[:-2].decode("utf8"))
+		return recommendedMoviesName
 
 	def getMoviesName(self):
-		for i in range(len(self.movies)-1):
-			self.moviesName.append(str(self.movies[i+1][11]).strip()[:-2].decode("utf8"))
 		return self.moviesName
 
 def main():
