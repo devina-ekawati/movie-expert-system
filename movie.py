@@ -126,8 +126,9 @@ class Movie:
 
 	def getMoviesName(self):
 		for movie in self.movies:
-			self.moviesName.append(str(movie[11]).decode("utf8")[:-2])
-		return self.moviesName
+			self.moviesName.append(str(movie[11]).decode("utf8").strip()[:-2])
+			self.recommendedMoviesName.append(str(self.movies[idx][11]).strip()[:-2])
+		return self.recommendedMoviesName
 
 def main():
 	movie = Movie()
