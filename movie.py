@@ -121,12 +121,12 @@ class Movie:
 		self.recommendedMovies = np.delete(self.recommendedMovies,deletedIdx)
 		self.recommendedMovies = self.recommendedMovies[:10]
 		for idx in self.recommendedMovies:
-			self.recommendedMoviesName.append(str(self.movies[idx][11])[:-2])
+			self.recommendedMoviesName.append(str(self.movies[idx][11]).decode("utf8")[:-2])
 		return self.recommendedMoviesName
 
 	def getMoviesName(self):
 		for movie in self.movies:
-			self.moviesName.append(str(movie[11])[:-2])
+			self.moviesName.append(str(movie[11]).decode("utf8")[:-2])
 		return self.moviesName
 
 def main():
