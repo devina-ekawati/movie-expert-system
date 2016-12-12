@@ -17,6 +17,7 @@ def init():
 		movies = list(csv.reader(f, delimiter=','))
 
 def getFavoriteActors():
+	actors = countActors()
 	numFavoriteMovies = len(favoriteMovies)
 	for i in range(numFavoriteMovies):
 		movieIdx = favoriteMovies[i]
@@ -27,6 +28,25 @@ def getFavoriteActors():
 				favoriteActors[actor] += 1
 			else:
 				favoriteActors[actor] = 1
+
+		for j in range(numActors):
+			actor = movies[movieIdx][actorIdx[j]]
+			# print actor, actors[actor]
+			if actors[actor] < 3:
+				del favoriteActors[actor]
+
+def countActors():
+	actors = {}
+	numMovies = len(movies) - 1
+	for i in range(numMovies):
+		numActors = len(actorIdx)
+		for j in range(numActors):
+			actor = movies[i+1][actorIdx[j]]
+			if actors.has_key(actor):
+				actors[actor] += 1
+			else:
+				actors[actor] = 1
+	return actors
 
 def getFavoriteDirectors():
 	numFavoriteMovies = len(favoriteMovies)
@@ -56,7 +76,6 @@ def countWeight(movieIdx):
 
 def main():
 	init()
-	print len(movies)
 	getFavoriteActors()
 	print favoriteActors
 	getFavoriteDirectors()
