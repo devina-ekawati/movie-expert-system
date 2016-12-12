@@ -6,10 +6,12 @@ class Movie:
 		self.movies = []
 		self.favoriteActors = {}
 		self.favoriteDirectors = {}
+		self.favoriteGenres = {}
 		self.favoriteMovies = [1,2,3,4,19,27,34]
 
 		self.actorIdx = [10, 6, 14]
 		self.directorIdx = 1
+		self.genreIdx = 9
 
 	def init(self):
 		with open("movie_metadata.csv", 'rb') as f:
@@ -57,6 +59,19 @@ class Movie:
 			else:
 				self.favoriteDirectors[director] = 1
 
+	def getFavoriteGenres(self):
+		numFavoriteMovies = len(self.favoriteMovies)
+		for i in range(numFavoriteMovies):
+			movieIdx = self.favoriteMovies[i]
+			genres = self.movies[movieIdx][self.genreIdx].split("|")
+			numGenres = len(genres)
+			for j in range(numGenres):
+				genre = genres[j]
+				if self.favoriteGenres.has_key(genre):
+					self.favoriteGenres[genre] += 1
+				else:
+					self.favoriteGenres[genre] = 1
+
 	def countWeight(movieIdx):
 		pass
 
@@ -67,6 +82,8 @@ def main():
 	print movie.favoriteActors
 	movie.getFavoriteDirectors()
 	print movie.favoriteDirectors
+	movie.getFavoriteGenres()
+	print movie.favoriteGenres
 
 if __name__ == "__main__":
     main()
