@@ -44,7 +44,6 @@ class Movie:
 
 			for j in range(numActors):
 				actor = self.movies[movieIdx][self.actorIdx[j]]
-				# print actor, actors[actor]
 				if actors[actor] < 3:
 					del self.favoriteActors[actor]
 
@@ -134,8 +133,6 @@ class Movie:
 
 def main():
 	movie = Movie()
-	# print movie.getMovieRecommendationNames([1,2,3,4,19,27,34])
-	# print movie.getMoviesName()
 
 if __name__ == "__main__":
     main()
