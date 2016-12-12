@@ -1,5 +1,6 @@
 import re, string
 import csv
+import numpy as np
 
 class Movie:
 	def __init__(self):
@@ -15,7 +16,9 @@ class Movie:
 
 		self.actorScore = 3
 		self.directorScore = 2
-		self.genreScore = 5
+		self.genreScore = 4
+		self.recommendedMovies = []
+		self.recommendedMoviesName = []
 
 	def init(self):
 		with open("movie_metadata.csv", 'rb') as f:
@@ -102,12 +105,22 @@ def main():
 	movie = Movie()
 	movie.init()
 	movie.getFavoriteActors()
-	print movie.favoriteActors
 	movie.getFavoriteDirectors()
-	print movie.favoriteDirectors
 	movie.getFavoriteGenres()
-	print movie.favoriteGenres
-	print movie.countWeight(6)
+	movieScores = []
+	for i in range(len(movie.movies)):
+		movieScores.append(movie.countWeight(i))
+	arr = np.array(movieScores)
+	movie.recommendedMovies =  arr.argsort()[-20:][::-1]
+	deletedIdx = []
+	for i in range(len(movie.recommendedMovies)):
+		if movie.recommendedMovies[i] in movie.favoriteMovies:
+			deletedIdx.append(i)		
+	movie.recommendedMovies = np.delete(movie.recommendedMovies,deletedIdx)
+	movie.recommendedMovies = movie.recommendedMovies[:10]
+	for idx in movie.recommendedMovies:
+		movie.recommendedMoviesName.append(str(movie.movies[idx][11])[:-2])
+	# print movie.recommendedMoviesName
 
 if __name__ == "__main__":
     main()
