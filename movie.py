@@ -101,26 +101,29 @@ class Movie:
 
 		return weight
 
+	def getMovieRecommendationNames(self):
+		self.init()
+		self.getFavoriteActors()
+		self.getFavoriteDirectors()
+		self.getFavoriteGenres()
+		movieScores = []
+		for i in range(len(self.movies)):
+			movieScores.append(self.countWeight(i))
+		arr = np.array(movieScores)
+		self.recommendedMovies =  arr.argsort()[-20:][::-1]
+		deletedIdx = []
+		for i in range(len(self.recommendedMovies)):
+			if self.recommendedMovies[i] in self.favoriteMovies:
+				deletedIdx.append(i)		
+		self.recommendedMovies = np.delete(self.recommendedMovies,deletedIdx)
+		self.recommendedMovies = self.recommendedMovies[:10]
+		for idx in self.recommendedMovies:
+			self.recommendedMoviesName.append(str(self.movies[idx][11])[:-2])
+		return self.recommendedMoviesName
+
 def main():
 	movie = Movie()
-	movie.init()
-	movie.getFavoriteActors()
-	movie.getFavoriteDirectors()
-	movie.getFavoriteGenres()
-	movieScores = []
-	for i in range(len(movie.movies)):
-		movieScores.append(movie.countWeight(i))
-	arr = np.array(movieScores)
-	movie.recommendedMovies =  arr.argsort()[-20:][::-1]
-	deletedIdx = []
-	for i in range(len(movie.recommendedMovies)):
-		if movie.recommendedMovies[i] in movie.favoriteMovies:
-			deletedIdx.append(i)		
-	movie.recommendedMovies = np.delete(movie.recommendedMovies,deletedIdx)
-	movie.recommendedMovies = movie.recommendedMovies[:10]
-	for idx in movie.recommendedMovies:
-		movie.recommendedMoviesName.append(str(movie.movies[idx][11])[:-2])
-	# print movie.recommendedMoviesName
+	# print movie.getMovieRecommendationNames()
 
 if __name__ == "__main__":
     main()
