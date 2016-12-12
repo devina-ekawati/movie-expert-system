@@ -5,6 +5,7 @@ import numpy as np
 class Movie:
 	def __init__(self):
 		self.movies = []
+		self.moviesName = []
 		self.favoriteActors = {}
 		self.favoriteDirectors = {}
 		self.favoriteGenres = {}
@@ -123,13 +124,15 @@ class Movie:
 			self.recommendedMoviesName.append(str(self.movies[idx][11])[:-2])
 		return self.recommendedMoviesName
 
-	def getMovies(self):
-		return self.movies
+	def getMoviesName(self):
+		for movie in self.movies:
+			self.moviesName.append(str(movie[11])[:-2])
+		return self.moviesName
 
 def main():
 	movie = Movie()
 	# print movie.getMovieRecommendationNames([1,2,3,4,19,27,34])
-	# print movie.getMovies()
+	# print movie.getMoviesName()
 
 if __name__ == "__main__":
     main()
