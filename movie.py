@@ -7,6 +7,10 @@ def init():
 	with open("movie_metadata.csv", 'rb') as f:
 		movies = csv.reader(f, delimiter=',')
 
+def getUserFavouriteMovies(input):
+	favMovies = []
+
+
 def main():
 	init()
 	
