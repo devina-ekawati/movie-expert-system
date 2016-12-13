@@ -18,6 +18,10 @@ class Movie:
 		self.actorScore = 3
 		self.directorScore = 2
 		self.genreScore = 4
+		self.numRecommendation = 10
+
+		self.classification = 0
+		self.construction = 1
 
 		self.init()
 
@@ -107,7 +111,7 @@ class Movie:
 
 		return weight
 
-	def getMovieRecommendationNames(self, favoriteMovies):
+	def getMovieRecommendationNames(self, favoriteMovies, kbsType):
 		self.favoriteMovies = favoriteMovies
 		self.getFavoriteActors()
 		self.getFavoriteDirectors()
@@ -116,13 +120,19 @@ class Movie:
 		for i in range(len(self.movies)):
 			movieScores.append(self.countWeight(i))
 		arr = np.array(movieScores)
-		recommendedMovies =  arr.argsort()[-20:][::-1]
+		numFavoriteMovies = len(favoriteMovies)
+		recommendedMovies =  arr.argsort()[-(numFavoriteMovies+self.numRecommendation):][::-1]
 		deletedIdx = []
 		for i in range(len(recommendedMovies)):
 			if recommendedMovies[i] in self.favoriteMovies:
 				deletedIdx.append(i)		
 		recommendedMovies = np.delete(recommendedMovies,deletedIdx)
-		recommendedMovies = recommendedMovies[:10]
+		if kbsType == self.classification:
+			recommendedMovies = recommendedMovies[:1]
+		elif kbsType == self.construction:
+			recommendedMovies = recommendedMovies[:self.numRecommendation]
+		else:
+			recommendedMovies = recommendedMovies[:0]
 		recommendedMoviesName = []
 		for idx in recommendedMovies:
 			recommendedMoviesName.append(str(self.movies[idx][11]).strip()[:-2].decode("utf8"))

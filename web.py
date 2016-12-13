@@ -17,9 +17,9 @@ def get_result():
 	for val in selected:
 		favoriteMovies.append(int(val))
 	if "classification" in request.form:
-		return render_template('index.html',moviesList=movie.getMoviesName(), movies=movie.getMovieRecommendationNames(favoriteMovies))
+		return render_template('index.html',moviesList=movie.getMoviesName(), movies=movie.getMovieRecommendationNames(favoriteMovies, 0))
 	else:
-		return render_template('index.html',moviesList=movie.getMoviesName(), movies=movie.getMovieRecommendationNames(favoriteMovies))
+		return render_template('index.html',moviesList=movie.getMoviesName(), movies=movie.getMovieRecommendationNames(favoriteMovies, 1))
 
 if __name__ == '__main__':
     app.run()
