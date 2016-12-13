@@ -16,16 +16,6 @@
 		$(document).ready(function() {
 			$(".js-example-basic-multiple").select2();
 		});
-		function myFunction() {
-		    // alert("Selected value is: "+$(".js-example-basic-multiple").select2("val"));
-		    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-		    $.getJSON($SCRIPT_ROOT + '/', {
-	        	selected: $(".js-example-basic-multiple").select2("val")
-	      }, function(data) {
-
-	      });
-		}
-
 	</script>
 </head>
 <body>
@@ -48,7 +38,8 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-4 col-sm-6">
-						<button type="submit" class="btn btn-primary">Get Recommendation</button>
+						<button type="submit" name="classification" class="btn btn-primary">Get Recommendation (Classification)</button>
+						<button type="submit" name="construction" class="btn btn-primary">Get Recommendation (Construction)</button>
 					</div>
 				</div>
 			</div>
